@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body {
+    font-family: "Poppins", serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
+}
+
+.navbar .container-fluid {
+    background-color: white;
+    margin-left: 20px;
+}
+
+span {
+    color: #B82132;
+
+}
+
+.btn-danger{
+    text-decoration: none;
+    background-color: #B82132;
+    color: white;
+    outline: 1px solid;
+    padding: 8px 20px;
+    border-radius: 15px;
+    transition: 0.5ms;
+
+}
+
+.btn-danger:hover {
+    background-color: white;
+    color: #B82132;
+}
+
+.card {
+border: none;
+border-radius: 12px;
+padding: 30px;
+background: #F6DED8;
+transition: all 0.3s ease-in-out;
+margin-top: 40px;
+margin-left: 50px;
+}
+
+
+.card-title {
+font-size: 1.2rem;
+font-weight: bold;
+color: #B82132;
+}
+.gambar{
+    display: inline-block;
+    position: absolute;
+    top: 6%;
+    left: 110%;
+}
+.timeline {
+position: relative;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.timeline::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    background-color: #B82132;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+.step {
+    position: relative;
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.step:nth-child(odd) {
+    text-align: right;
+    padding-right: 60px;
+}
+
+.step:nth-child(even) {
+    text-align: left;
+    padding-left: 60px;
+}
+
+
+.step::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #B82132;
+    border-radius: 50%;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid white;
+    box-shadow: 0 0 10px rgba(184, 33, 50, 0.5);
+}
+
+.box {
+    background-color: white;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.step h3 {
+    color: #B82132;
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.step p {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.5;
+}
+
+
+.contact-section {
+    background-color:#F6DED8;
+    padding: 30px 10px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.contact-section h2 {
+font-size: 24px;
+color: #B82132;
+margin-bottom: 20px;
+}
+
+.contact-info {
+display: flex;
+justify-content: center;
+gap: 30px;
+flex-wrap: wrap;
+}
+
+.contact-item {
+font-size: 16px;
+color: #333;
+}

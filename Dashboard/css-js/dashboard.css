@@ -1,0 +1,111 @@
+.main-content {
+    max-width: 100%; 
+    margin: 0 auto; 
+    min-height: 100vh; 
+    flex-direction: column;
+    justify-content: center;
+  
+}
+
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.main-header h1 {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.custom-gap {
+  gap: 155px;
+}
+
+
+.card {
+  border: none;
+  border-radius: 12px;
+  padding: 50px;
+  background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  
+  
+}
+
+.card-title {
+  font-size: 10px;
+  font-weight: bold;
+ 
+}
+
+.card-icon {
+  font-size: 2rem;
+  background: linear-gradient(135deg, #D2665A, #B82132);
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+  background: #EAEAEA;
+  color: black;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+}
+
+.table tbody tr:hover {
+  background: rgba(75, 121, 161, 0.1);
+}
+
+.btn-td {
+  background-color: #D2665A;
+  color: white;
+}
+.btn-laporan {
+
+    background-color: #D2665A;
+    color: white;
+    padding: 10px 200px;
+    margin: 20px auto;
+    display: block; 
+    text-align: center;
+  }
+
+.btn-td:hover, 
+.btn-laporan:hover {
+  background-color: #F2B28C;
+  color: white;
+}
+
+.form-control:focus,
+.form-label:focus,
+.form-select:focus {
+    border-color: #B82132;
+    box-shadow: 0 0 10px rgba(226, 91, 73, 0.5);
+    outline: none;
+}
+  
+  
+  @keyframes fadeIn {
+  from {
+  opacity: 0;
+  }
+  to {
+  opacity: 1;
+  }
+  }

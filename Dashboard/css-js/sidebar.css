@@ -1,0 +1,68 @@
+/* Global Settings */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #B82132 70%, #f4f7fd 70%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  /* Sidebar Styling */
+  .sidebar {
+    background: white;
+    height: 100vh;
+    color: #B82132;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    transition: all 0.4s ease-in-out;
+  }
+  
+  .sidebar a {
+    color: black;
+    padding: 15px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar a i {
+    font-size: 1.3rem;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar a:hover,
+  .sidebar a.active {
+    background: linear-gradient(135deg, #D2665A, #B82132);
+    color: white;
+    transform: scale(1.05);
+  }
+  
+  .sidebar a:hover i {
+    transform: rotate(360deg);
+  }
+  
+  
+  /* Main Content Styling */
+  .main-content {
+    padding: 30px;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
