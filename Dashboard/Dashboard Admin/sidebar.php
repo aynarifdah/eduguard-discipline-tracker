@@ -1,3 +1,20 @@
+<?php
+    session_start();
+    include '../../connection.php'; // Pastikan path sesuai dengan sistemmu
+   
+    if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php"); 
+    exit();
+}
+
+$query = "SELECT v.id_catatan, s.nama_siswa, p.jenis_pelanggaran, v.tgl_pelanggaran, v.status_verifikasi
+          FROM verifikasi v
+          JOIN siswa s ON v.id_siswa = s.id_siswa
+          JOIN pelanggaran p ON v.id_pelanggaran = p.id_pelanggaran
+          WHERE v.status_verifikasi = 'belum diverifikasi'";
+$result = mysqli_query($conn, $query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,11 +38,14 @@
         <h3 class="mb-5 text-center">EduGuard</h3>
 
         <nav>
-          <a href="data_pelanggaran.php" class="nav-link "><i class="fa-solid fa-house"></i>Dashboard</a>
+          <a href="dashboard.php" class="nav-link "><i class="fa-solid fa-house"></i> Dashboard</a>
           <a href="Laporan.php" class="nav-link"><i class="fa-solid fa-envelope"></i> Laporan Pelanggaran</a>
-          <a href="table_verifikasi.php" class="nav-link"><i class="fa-solid fa-chart-bar"></i> Verifikasi</a>
-          <a href="logout.php" style="text-decoration: none;"><i class="fa-solid fa-sign-out-alt" onclick="logout()"></i> Logout</a>
-         
+          <a href="table_verifikasi.php" class="nav-link">
+            <i class="fa-solid fa-chart-bar"></i> Verifikasi 
+          </a>
+          <a href="../../logout.php" style="text-decoration: none;">
+            <i class="fa-solid fa-sign-out-alt" onclick="logout()"></i> Logout
+          </a>
         </nav>
       </aside>
 
@@ -38,7 +58,6 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../css-js/script.js"></script>
-  <script src="../css-js/sp.js"></script>
   
 </body>
 

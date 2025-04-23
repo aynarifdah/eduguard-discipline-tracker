@@ -40,7 +40,7 @@ if ($id_siswa > 0) {
         const detailContent = document.getElementById("detail-content");
         let no = 1;
 
-        fetch(`fetch_pelanggaran.php?id=${id}`)
+        fetch(`dashboard.php?id=${id}`)
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {

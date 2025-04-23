@@ -1,8 +1,16 @@
 <?php
-    $host = 'localhost';
-    $username = 'root';
+
+    $hostname = 'localhost';
+    $username = 'root'; // Menggunakan 'username' bukan 'servername'
     $password = '';
     $dbname = 'eduguard';
 
-    $conn = mysqli_connect($host, $username, $password, $dbname);
+    // Membuat koneksi
+    $conn = mysqli_connect($hostname, $username, $password, $dbname);
+
+    // Cek koneksi
+    if (!$conn) {
+        die("Koneksi gagal: " . mysqli_connect_error());
+    }
+
 ?>

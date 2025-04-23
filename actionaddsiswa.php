@@ -4,21 +4,24 @@ require_once 'connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ambil data dari form
+    $foto = $_POST['foto'];
     $nisn = $_POST['nisn'];
-    $nama_siswa = $_POST['nama_siswa'];
+    $nama_siswa = $_POST['namasiswa'];
     $kelas = $_POST['kelas'];
     $jurusan = $_POST['jurusan'];
+    $nama_ortu = $_POST['nama_ortu'];
+    $no_ortu = $_POST['no_ortu'];
     $password = $_POST['password'];
 
     // Validasi input kosong
-    if (empty($nisn) || empty($nama_siswa) || empty($kelas) || empty($jurusan) || empty($password)) {
+    if ( empty($nisn) || empty($nama_siswa) || empty($kelas) || empty($jurusan) || empty($nama_ortu) || empty($no_ortu) || empty($password) || empty($foto) ) {
         echo "Semua data harus diisi.";
         exit;
     }
 
     // Query untuk memasukkan data ke tabel masyarakat
-    $stmt = $conn->prepare("INSERT INTO siswa (nisn, nama_siswa, kelas, jurusan, password) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $nisn, $nama_siswa, $kelas, $jurusan, $password);
+    $stmt = $conn->prepare("INSERT INTO siswa (nisn, nama_siswa, kelas, jurusan, nama_ortu, no_ortu, password, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssss", $nisn, $nama_siswa, $kelas, $jurusan, $nama_ortu, $no_ortu, $password, $foto);
 
     if ($stmt->execute()) {
         echo "<script>
@@ -27,7 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </script>";
         exit;
     } else {
-        echo "Gagal menyimpan data: " . $stmt->error;
+        echo "<script>
+            alert('Registrasi gagal: " . addslashes($stmt->error) . "');
+            window.location.href = 'add_siswa.php'; // Bisa diarahin ke halaman sebelumnya
+        </script>";
     }
 
     $stmt->close();

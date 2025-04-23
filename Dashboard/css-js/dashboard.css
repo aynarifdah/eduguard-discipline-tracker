@@ -4,9 +4,7 @@
     min-height: 100vh; 
     flex-direction: column;
     justify-content: center;
-  
 }
-
 
 .main-header {
   display: flex;
@@ -20,10 +18,6 @@
   color: #ffffff;
 }
 
-.custom-gap {
-  gap: 155px;
-}
-
 
 .card {
   border: none;
@@ -32,12 +26,10 @@
   background: white;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
-  
-  
 }
 
 .card-title {
-  font-size: 10px;
+  font-size: 1.2rem;
   font-weight: bold;
  
 }

@@ -20,7 +20,7 @@
         .container {
             display: flex;
             width: 80%;
-            height: 80%;
+            height: 90%;
             background: white;
             margin: auto;
             border-radius: 20px;
@@ -68,13 +68,13 @@
         .input-container svg {
             position: absolute;
             right: 15px;
-            top: 50%;
+            top: 64%;
             transform: translateY(-50%);
             color: #B82132;
         }
 
         /* Tombol Login */
-        .login-btn {
+        button {
             background: #B82132;
             color: white;
             text-decoration: none;
@@ -90,7 +90,7 @@
             transition: 0.3s;
         }
 
-        .login-btn:hover {
+        button {
             background: #9a1717;
         }
 

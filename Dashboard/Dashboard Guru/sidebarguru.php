@@ -1,3 +1,16 @@
+<?php
+  include '../../connection.php';
+
+  session_start();
+  if (!isset($_SESSION['username'])) {
+      header("Location: ../../login.php"); 
+      exit();
+  }
+    
+    // Ambil data laporan yang masih dalam status 'proses' dari tabel verifikasi
+    $query = $conn->query("SELECT * FROM verifikasi WHERE status_verifikasi = 'proses'");
+    
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -24,7 +37,7 @@
                 <nav>
                     <a href="dashboard.php" class="nav-link active"><i class="fa-solid fa-house"></i> Dashboard</a>
                     <a href="laporan.php" class="nav-link"><i class="fa-solid fa-list"></i> Form Lapor</a>
-                    <a href="../Dashboard Admin/logout.php" style="text-decoration: none;"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
+                    <a href="../../logout.php" style="text-decoration: none;"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
                 </nav>
             </aside>
 
@@ -36,7 +49,7 @@
            
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../css-js/sidebar.js"></script>
+    <script src="../css-js/script.js"></script>
 
     
 

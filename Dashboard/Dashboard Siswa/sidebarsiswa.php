@@ -1,3 +1,18 @@
+<?php
+    session_start();
+    include '../../connection.php'; // Pastikan path sesuai dengan sistemmu
+    
+    // Cek apakah admin atau guru sudah login
+    if (!isset($_SESSION['nisn'])) {
+        echo '<script>alert("Anda Belum Login"); window.location="../../login.php";</script>';
+        exit;
+    }
+
+    
+    // Ambil data laporan yang masih dalam status 'proses' dari tabel verifikasi
+    $query = $conn->query("SELECT * FROM verifikasi WHERE status_verifikasi = 'proses'");
+    
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -24,7 +39,7 @@
                     <a href="dashboard.php" class="nav-link active"><i class="fa-solid fa-house"></i> Dashboard</a>
                     <a href="riwayat.php" class="nav-link"><i class="fa-solid fa-list"></i> Riwayat Pelanggaran</a>
                     <a href="notifikasi.php" class="nav-link"><i class="fa-solid fa-bell"></i> Notifikasi</a>
-                    <a href="../Dashboard Admin/logout.php" style="text-decoration: none  
+                    <a href="../../logout.php" style="text-decoration: none  
                     ;"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
                 </nav>
             </aside>
@@ -37,7 +52,7 @@
            
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../css-js/sidebar.js"></script>
+    <script src="../css-js/script.js"></script>
 
     
 </body>

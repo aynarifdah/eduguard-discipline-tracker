@@ -30,32 +30,46 @@
     <br>
     <div class="card">
     <h2 class="mb-4 text-center">Form Add Siswa</h2>
-    <form>
-        
+
+    <form action="../../actionaddsiswa.php" method="POST">    
 
         <div class="mb-3">
+            <label for="foto" class="form-label">Foto Siswa:</label>
+            <input type="file" class="form-control" id="foto" name="foto" placeholder="Masukkan Foto" accept="img/*">
+        </div>
+        <div class="mb-3">
             <label for="nisn" class="form-label">NISN:</label>
-            <input type="text" class="form-control" id="nisn" placeholder="Masukkan Nisn">
+            <input type="text" class="form-control" id="nisn" name="nisn" placeholder="Masukkan Nisn">
         </div>
 
         <div class="mb-3">
             <label for="namasiswa" class="form-label">Nama Lengkap:</label>
-            <input type="text" class="form-control" id="namasiswa" placeholder="Masukkan Nama">
+            <input type="text" class="form-control" id="namasiswa" name="namasiswa" placeholder="Masukkan Nama">
         </div>
 
         <div class="mb-3">
             <label for="kelas" class="form-label">Kelas:</label>
-            <input type="text" class="form-control" id="kelas" placeholder="Masukkan kelas">
+            <input type="text" class="form-control" id="kelas" name="kelas" placeholder="Masukkan kelas">
         </div>
 
         <div class="mb-3">
             <label for="jurusan" class="form-label">Jurusan:</label>
-            <input type="text" class="form-control" id="jurusan" placeholder="Masukkan kelas">
+            <input type="text" class="form-control" id="jurusan" name="jurusan" placeholder="Masukkan jurusan">
+        </div>
+
+        <div class="mb-3">
+            <label for="nama_ortu" class="form-label">Nama Ortu:</label>
+            <input type="text" class="form-control" id="nama_ortu" name="nama_ortu" placeholder="Masukkan nama wali murid">
+        </div>
+
+        <div class="mb-3">
+            <label for="no_ortu" class="form-label">Nomor Telephone Ortu:</label>
+            <input type="number" class="form-control" id="no_ortu" name="no_ortu" placeholder="Masukkan nomor wali murid">
         </div>
 
         <div class="mb-3">
             <label for="password" class="form-label">Pasword:</label>
-            <input type="text" class="form-control" id="jurusan" placeholder="Masukkan kelas">
+            <input type="text" class="form-control" id="password" name="password" placeholder="Masukkan password">
         </div>
         
         <button type="submit" class="btn btn-laporan">Add</button>

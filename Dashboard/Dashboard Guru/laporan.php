@@ -1,3 +1,19 @@
+<?php
+include '../../connection.php';
+
+// Ambil data kategori
+$queryKategori = "SELECT * FROM kategori";
+$resultKategori = mysqli_query($conn, $queryKategori);
+
+//ambil data pasal
+$queryPasal = "SELECT * FROM pelanggaran";
+$resultPasal = mysqli_query($conn, $queryPasal);
+
+// Ambil data siswa
+$querySiswa = "SELECT * FROM siswa";
+$resultSiswa = mysqli_query($conn, $querySiswa);
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,76 +22,161 @@
     <title>Form Laporan Pelanggaran</title>
     <link rel="stylesheet" href="../css-js/dashboard.css">
 </head>
-<style>
-    .card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-</style>
 <body>
-    <main class=" main-content">
+<main class="main-content">
     <div class="mt-5">
-    <div class="card">
-              
-    <h2 class="mb-4 text-center">Form Laporan Pelanggaran</h2>
-    <form>
-        
+        <div class="card">
+            <h2 class="mb-4 text-center">Form Laporan Pelanggaran</h2>
+            <form action="../../proses_laporan.php" method="POST">
+                <div class="mb-3">
+                    <label for="nama_siswa" class="form-label">Nama:</label>
+                    <p style="color: grey;font-size:15px;color:red;">* isi nama di awali dengan huruf Kapital</p>
+                    <input list="list_siswa" class="form-control" id="nama_siswa" name="nama_siswa" placeholder="Masukkan Nama Siswa">
+                    <datalist id="list_siswa">
+                        <?php while ($row = mysqli_fetch_assoc($resultSiswa)) : ?>
+                            <option value="<?= $row['nama_siswa']; ?>" 
+                                data-nisn="<?= $row['nisn']; ?>" 
+                                data-kelas="<?= $row['kelas']; ?>"
+                                data-jurusan="<?= $row['jurusan']; ?>">
+                        <?php endwhile; ?>
+                    </datalist>
+                </div>
 
-        <div class="mb-3">
-            <label for="nisn" class="form-label">NISN:</label>
-            <input type="text" class="form-control" id="nisn" placeholder="Masukan Nisn">
-        </div>
+                <!-- Input NISN (terisi otomatis) -->
+                <div class="mb-3">
+                    <label for="nisn" class="form-label">NISN:</label>
+                    <input type="text" class="form-control" id="nisn" name="nisn" readonly>
+                </div>
 
-        <div class="mb-3">
-            <label for="namasiswa" class="form-label">Nama:</label>
-            <input type="text" class="form-control" id="namasiswa" placeholder="Masukan Nama">
-        </div>
-        <div class="mb-3">
-            <label for="Kelas" class="form-label">Kelas:</label>
-            <input type="text" class="form-control" id="Kelas" placeholder="Masukan Kelas">
-        </div>
-        <div class="mb-3">
-            <label for="tanggal" class="form-label">Tanggal:</label>
-            <input type="date" class="form-control" id="tanggal" placeholder="Masukan Tanggal">
-        </div>
-          
-          
-         
-          <label class="mb-2" for="kategori">Kategori:</label>
-          <select id="kategori" name="kategori" class="form-select mb-3" aria-label="Default select example" required>
-              <option value="">-- Pilih Kategori --</option>
-              <option value="pakaian">Pakaian Seragam dan Perangkatnya</option>
-              <option value="kerapian">Kerapian</option>
-              <option value="sikap">Sikap dan Perilaku</option>
-            </select>
+                <!-- Input Kelas (terisi otomatis) -->
+                <div class="mb-3">
+                    <label for="kelas" class="form-label">Kelas:</label>
+                    <input type="text" class="form-control" id="kelas" name="kelas" readonly>
+                </div>
 
-        <label class="mb-2" for="pasal">Pasal:</label>
-        <select id="pasal" name="pasal" class="form-select mb-3" aria-label="Default select example" required>
-            <option value="">-- Pilih Pasal --</option>
-        </select>
+                <!-- Input Jurusan (terisi otomatis) -->
+                <div class="mb-3">
+                    <label for="jurusan" class="form-label">Jurusan:</label>
+                    <input type="text" class="form-control" id="jurusan" name="jurusan" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="tanggal" class="form-label">Tanggal:</label>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal">
+                </div>
 
-        <label class="mb-2" for="ayat">Ayat:</label>
-        <select id="ayat" name="ayat" class="form-select mb-3" aria-label="Default select example" required>
-            <option value="">-- Pilih Ayat --</option>
-        </select>
-        
-      
-        <div class="mb-3">
-            <label for="poin" class="form-label ">Poin:</label>
-            <input type="text" class="form-control" id="poin" name="poin" readonly>
+                <div class="mb-3">
+                    <label for="kategori" class="form-label">Kategori:</label>
+                    <select id="kategori" name="kategori" class="form-select" required>
+                        <option value="">-- Pilih Kategori --</option>
+                        <?php while ($row = mysqli_fetch_assoc($resultKategori)) : ?>
+                        <option value="<?= $row['id_kategori']; ?>"><?= $row['nama_kategori']; ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="pasal" class="form-label">Pasal:</label>
+                    <select id="pasal" name="pasal" class="form-select" required>
+                        <option value="">-- Pilih Pasal --</option>
+                        <?php while ($row = mysqli_fetch_assoc($resultPasal)) : ?>
+                        <option value="<?= $row['id_pelanggaran']; ?>"><?= $row['jenis_pelanggaran']; ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="poin" class="form-label">Poin:</label>
+                    <span id="poin">-</span>
+                </div>
+                <div>
+                    <select name="pelapor" required>
+                        <option value="admin">Admin</option>
+                        <option value="guru">Guru</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="keterangan" class="form-label">Keterangan:</label>
+                    <input type="text" class="form-control" id="keterangan" name="keterangan">
+                </div>
+                <button type="submit" class="btn btn-laporan">Kirim</button>
+            </form>
+
+            <script>
+                document.getElementById("nama_siswa").addEventListener("input", function () {
+                let input = this.value;
+                let list = document.getElementById("list_siswa").options;
+                
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i].value === input) {
+                        let nisn = list[i].getAttribute("data-nisn");
+                        let kelas = list[i].getAttribute("data-kelas");
+                        let jurusan = list[i].getAttribute("data-jurusan");
+
+                        document.getElementById("nisn").value = nisn;
+                        document.getElementById("kelas").value = kelas;
+                        document.getElementById("jurusan").value = jurusan;
+                        break;
+                    } else {
+                        document.getElementById("nisn").value = "";
+                        document.getElementById("kelas").value = "";
+                        document.getElementById("jurusan").value = "";
+                    }
+                }
+            });
+
+                document.getElementById('kategori').addEventListener('change', function () {
+                let kategoriID = this.value;
+                let pasalSelect = document.getElementById('pasal');
+                let poinElement = document.getElementById('poin');
+
+                // Hapus opsi sebelumnya
+                pasalSelect.innerHTML = '<option value="">-- Pilih Pasal --</option>';
+                poinElement.innerText = '-';
+
+                if (kategoriID !== '') {
+                    // Data pasal diambil dari PHP
+                    let pelanggaranData = <?php
+                        $queryPelanggaran = "SELECT * FROM pelanggaran";
+                        $resultPelanggaran = mysqli_query($conn, $queryPelanggaran);
+                        $dataPelanggaran = [];
+                        while ($row = mysqli_fetch_assoc($resultPelanggaran)) {
+                            $dataPelanggaran[] = $row;
+                        }
+                        echo json_encode($dataPelanggaran);
+                    ?>;
+
+                    pelanggaranData.forEach(function (item) {
+                        if (item.id_kategori == kategoriID) {
+                            let option = document.createElement('option');
+                            option.value = item.id_pelanggaran;
+                            option.textContent = item.jenis_pelanggaran;
+                            pasalSelect.appendChild(option);
+                        }
+                    });
+                }
+            });
+
+            // Event listener untuk menampilkan poin berdasarkan pasal yang dipilih
+            document.getElementById('pasal').addEventListener('change', function () {
+                let pelanggaranID = this.value;
+                let poinElement = document.getElementById('poin');
+
+                if (pelanggaranID !== '') {
+                    let poinData = <?php
+                        $queryPoin = "SELECT id_pelanggaran, poin_pelanggaran FROM pelanggaran";
+                        $resultPoin = mysqli_query($conn, $queryPoin);
+                        $dataPoin = [];
+                        while ($row = mysqli_fetch_assoc($resultPoin)) {
+                            $dataPoin[$row['id_pelanggaran']] = $row['poin_pelanggaran'];
+                        }
+                        echo json_encode($dataPoin);
+                    ?>;
+                    poinElement.innerText = poinData[pelanggaranID] || '-';
+                } else {
+                    poinElement.innerText = '-';
+                }
+            });
+            </script>
         </div>
-          
-        
-        <div class="mb-3">
-          <label for="Keterangan" class="form-label">Keterangan:</label>
-          <textarea class="form-control" id="keterangan" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-laporan">Kirim</button>
-    
-    </form>
-    </div>
     </div>
 </main>
-   
 </body>
 </html>

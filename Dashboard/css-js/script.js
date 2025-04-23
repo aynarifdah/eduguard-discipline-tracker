@@ -11,8 +11,8 @@ $(document).ready(function () {
                 } else {
                     console.log("✅ Halaman berhasil dimuat:", page);
     
-                    // Jika halaman yang dimuat adalah "data_pelanggaran.html", jalankan ulang script
-                    if (page.includes("data_pelanggaran.php")) {
+                    
+                    if (page.includes("dashboard.php")) {
                         console.log("🔄 Memuat ulang event listener SP...");
                         $.getScript("../css-js/sp.js"); // Load ulang script
                     }
@@ -24,7 +24,7 @@ $(document).ready(function () {
     
     
     // Load halaman pertama kali
-    loadPage("data_pelanggaran.php");
+    loadPage("dashboard.php");
 
     $(document).on("click", ".nav-link", function (e) {
         e.preventDefault();
@@ -36,28 +36,4 @@ $(document).ready(function () {
     });
 });
 
-// === PASANG ULANG EVENT LISTENER SP === //
-function loadSPEvents() {
-    console.log("Menjalankan ulang event SP...");
 
-    // EVENT LISTENER UNTUK DROPDOWN SP
-    $(document).off("change", ".sp-dropdown").on("change", ".sp-dropdown", function () {
-        let siswaId = $(this).data("id");
-        let btn = $(`.sp-btn[data-id="${siswaId}"]`);
-        btn.prop("disabled", $(this).val() === "");
-        console.log(`SP dipilih untuk siswa ID ${siswaId}, tombol diaktifkan.`);
-    });
-
-    // EVENT LISTENER UNTUK TOMBOL KIRIM SP
-    $(document).off("click", ".sp-btn").on("click", ".sp-btn", function () {
-        let siswaId = $(this).data("id");
-        let dropdown = $(`.sp-dropdown[data-id="${siswaId}"]`);
-        let spJenis = dropdown.val();
-
-        if (spJenis) {
-            alert(`Surat ${spJenis} dikirim ke Siswa ID ${siswaId}!`);
-            dropdown.prop("disabled", true);
-            $(this).prop("disabled", true);
-        }
-    });
-}
