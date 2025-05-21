@@ -7,12 +7,16 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$query = "SELECT sb.id_siswa, s.nisn, s.nama_siswa, s.kelas, 
-                 COALESCE(SUM(p.poin_pelanggaran), 0) AS total_poin
-          FROM siswa_bermasalah sb
-          JOIN pelanggaran p ON sb.id_pelanggaran = p.id_pelanggaran
-          JOIN siswa s ON sb.id_siswa = s.id_siswa
-          GROUP BY sb.id_siswa, s.nisn, s.nama_siswa, s.kelas";
+$query = "SELECT s.id_siswa, s.nisn, s.nama_siswa, s.kelas, s.jurusan,
+    (SELECT sb2.id_masalah 
+     FROM siswa_bermasalah sb2 
+     WHERE sb2.id_siswa = s.id_siswa 
+     ORDER BY sb2.id_masalah DESC LIMIT 1) AS id_masalah,
+    COALESCE(SUM(p.poin_pelanggaran), 0) AS total_poin
+    FROM siswa_bermasalah sb
+    JOIN pelanggaran p ON sb.id_pelanggaran = p.id_pelanggaran
+    JOIN siswa s ON sb.id_siswa = s.id_siswa
+    GROUP BY s.id_siswa, s.nisn, s.nama_siswa, s.kelas, s.jurusan";
 $result = mysqli_query($conn, $query);
 ?>
 
@@ -38,7 +42,7 @@ $result = mysqli_query($conn, $query);
         .detail-btn {
             display: inline-flex;
             align-items: center;
-            background-color:rgb(226, 10, 10); 
+            background-color:rgb(40, 183, 12); 
             color: white;
             padding: 8px 12px;
             border-radius: 5px;
@@ -48,7 +52,7 @@ $result = mysqli_query($conn, $query);
         }
 
         .detail-btn:hover {
-            background-color:rgb(179, 0, 0); 
+            background-color:rgb(21, 179, 0); 
             transform: scale(1.05); 
         }
 
@@ -85,11 +89,15 @@ $result = mysqli_query($conn, $query);
                 </div>
                 <!-- Search Form -->
                 <div class="col-auto">
-                    <form class="d-flex">
-                    <input class="form-control me-2" type="search" name="keyword" placeholder="Cari Jurusan..." aria-label="Search" style="max-width: 250px;"
-                    >
-                    <button class="btn btn-danger" type="submit">Cari</button>
-                    </form>
+                <select id="filterJurusan" class="form-select d-flex" style="margin:10px;width:300px;" aria-label="Default select example">
+                                    <option value="">Cari jurusan</option>
+                                    <option value="PPLG">PPLG</option>
+                                    <option value="PH">PH</option>
+                                    <option value="DKV">DKV</option>
+                                    <option value="TKRO">TKRO</option>
+                                    <option value="TBSM">TBSM</option>
+                                    <option value="AKL">AKL</option>
+                                </select>
                 </div>
                 </div>
 
@@ -101,6 +109,7 @@ $result = mysqli_query($conn, $query);
                                 <th>NISN</th>
                                 <th>Nama Siswa</th>
                                 <th>Kelas</th>
+                                <th>Jurusan</th>
                                 <th>Poin</th>
                                 <th>Aksi</th>
                             </tr>
@@ -114,6 +123,7 @@ $result = mysqli_query($conn, $query);
                                     <td>{$row['nisn']}</td>
                                     <td>{$row['nama_siswa']}</td>
                                     <td>{$row['kelas']}</td>
+                                    <td class='jurusan-cell'>{$row['jurusan']}</td>
                                     <td>{$row['total_poin']}</td>
                                     <td>
                                         <button class='detail-btn'><a href=\"../Dashboard Siswa/dashboard.php?nisn=" .urlencode($row['nisn']) . "\" >Detail</a></button>
@@ -128,5 +138,20 @@ $result = mysqli_query($conn, $query);
             </div>
         </div>
     </main>
+<script>
+    document.getElementById('filterJurusan').addEventListener('change', function () {
+                const selectedJurusan = this.value.toUpperCase();
+                const rows = document.querySelectorAll('table tbody tr');
+
+                rows.forEach(row => {
+                    const jurusanText = row.querySelector('.jurusan-cell')?.textContent.toUpperCase() || "";
+                    if (!selectedJurusan || jurusanText.includes(selectedJurusan)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
+        </script>
 </body>
 </html>

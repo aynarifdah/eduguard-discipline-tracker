@@ -91,7 +91,7 @@ if ($totalPoin >= 10 && $totalPoin < 30) {
                         <th>Keterangan</th>
                     </tr>
                 </thead>
-                <tbody style="font-size: 13px;">
+                <tbody style="font-size: 16x;">
                         <?php
                         $queryRiwayat = "SELECT p.jenis_pelanggaran, p.poin_pelanggaran, sb.tgl_pelanggaran, sb.keterangan
                         FROM siswa_bermasalah sb

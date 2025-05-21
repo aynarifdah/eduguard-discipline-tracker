@@ -5,10 +5,10 @@ if (isset($_POST['terima'])) {
     $id_catatan = $_POST['id_catatan'];
 
     // Ambil data dari tabel verifikasi, siswa, dan pelanggaran
-    $cek_query = "SELECT v.id_siswa, v.id_pelanggaran, v.id_admin, v.tgl_pelanggaran, p.poin_pelanggaran 
-                  FROM verifikasi v
-                  JOIN pelanggaran p ON v.id_pelanggaran = p.id_pelanggaran
-                  WHERE v.id_catatan = ?";
+    $cek_query = "SELECT v.id_siswa, v.id_pelanggaran, v.id_admin, v.tgl_pelanggaran, v.keterangan, p.poin_pelanggaran 
+                FROM verifikasi v
+                JOIN pelanggaran p ON v.id_pelanggaran = p.id_pelanggaran
+                WHERE v.id_catatan = ?";
     
     $stmt = $conn->prepare($cek_query);
     $stmt->bind_param("i", $id_catatan);
@@ -20,11 +20,12 @@ if (isset($_POST['terima'])) {
         $data = $result->fetch_assoc();
 
         // Masukkan data ke siswa_bermasalah
-        $insert_query = "INSERT INTO siswa_bermasalah (id_siswa, id_pelanggaran, id_admin, tgl_pelanggaran, status_masalah, total_poin)
-                         VALUES (?, ?, ?, ?, 'verifikasi', ?)";
-        
+        $insert_query = "INSERT INTO siswa_bermasalah (id_siswa, id_pelanggaran, id_admin, tgl_pelanggaran, status_masalah, total_poin, keterangan)
+                 VALUES (?, ?, ?, ?, 'verifikasi', ?, ?)";
+                 
         $stmt = $conn->prepare($insert_query);
-        $stmt->bind_param("iiisi", $data['id_siswa'], $data['id_pelanggaran'], $data['id_admin'], $data['tgl_pelanggaran'], $data['poin_pelanggaran']);
+        $stmt->bind_param("iiisis", $data['id_siswa'], $data['id_pelanggaran'], $data['id_admin'], $data['tgl_pelanggaran'], $data['poin_pelanggaran'], $data['keterangan']);
+
         $stmt->execute();
         $stmt->close();
 

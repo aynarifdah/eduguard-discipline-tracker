@@ -25,13 +25,13 @@
     <main class="col-md-9 col-lg-10 main-content">
 
     <div class="md-5">
-    <td><a href="sidebar.php" class="btn btn-td ">Kembali</a></td>
+    <td><a href="add.php" class="btn btn-td ">Kembali</a></td>
     </div>
     <br>
     <div class="card">
     <h2 class="mb-4 text-center">Form Add Siswa</h2>
 
-    <form action="../../actionaddsiswa.php" method="POST">    
+    <form action="../../actionaddsiswa.php" method="POST" enctype="multipart/form-data">
 
         <div class="mb-3">
             <label for="foto" class="form-label">Foto Siswa:</label>
@@ -44,6 +44,10 @@
 
         <div class="mb-3">
             <label for="namasiswa" class="form-label">Nama Lengkap:</label>
+            <br>
+                    <small class="form-text text-danger">
+                        * isi nama di awali huruf kapital
+                    </small>
             <input type="text" class="form-control" id="namasiswa" name="namasiswa" placeholder="Masukkan Nama">
         </div>
 
@@ -64,7 +68,7 @@
 
         <div class="mb-3">
             <label for="no_ortu" class="form-label">Nomor Telephone Ortu:</label>
-            <input type="number" class="form-control" id="no_ortu" name="no_ortu" placeholder="Masukkan nomor wali murid">
+            <input type="text" class="form-control" id="no_ortu" name="no_ortu" placeholder="Masukkan nomor wali murid">
         </div>
 
         <div class="mb-3">

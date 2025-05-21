@@ -30,7 +30,10 @@ $resultSiswa = mysqli_query($conn, $querySiswa);
             <form action="../../proses_laporan.php" method="POST">
                 <div class="mb-3">
                     <label for="nama_siswa" class="form-label">Nama:</label>
-                    <p style="color: grey;font-size:15px;color:red;">* isi nama di awali dengan huruf Kapital</p>
+                    <br>
+                    <small class="form-text text-danger">
+                        * isi nama di awali huruf kapital
+                    </small>
                     <input list="list_siswa" class="form-control" id="nama_siswa" name="nama_siswa" placeholder="Masukkan Nama Siswa">
                     <datalist id="list_siswa">
                         <?php while ($row = mysqli_fetch_assoc($resultSiswa)) : ?>
@@ -174,6 +177,32 @@ $resultSiswa = mysqli_query($conn, $querySiswa);
                     poinElement.innerText = '-';
                 }
             });
+              //untuk ubah warna button di readonly
+              document.getElementById("nama_siswa").addEventListener("input", function () {
+            let input = this.value;
+            let list = document.getElementById("list_siswa").options;
+            let nisn = document.getElementById("nisn");
+            let kelas = document.getElementById("kelas");
+            let jurusan = document.getElementById("jurusan");
+
+            let ketemu = false;
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].value === input) {
+                    nisn.value = list[i].dataset.nisn;
+                    kelas.value = list[i].dataset.kelas;
+                    jurusan.value = list[i].dataset.jurusan;
+                    ketemu = true;
+                    break;
+                }
+            }
+            if (!ketemu) nisn.value = kelas.value = jurusan.value = "";
+
+            // Ubah background kalau ada isi
+            [nisn, kelas, jurusan].forEach(el => {
+                el.style.backgroundColor = el.value ? "#F1F1F1" : "";
+            });
+        });
+
             </script>
         </div>
     </div>

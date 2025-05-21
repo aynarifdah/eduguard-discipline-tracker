@@ -7,12 +7,17 @@
         exit();
     }
 
-    $query = "SELECT sb.id_siswa, s.nisn, s.nama_siswa, s.kelas, 
-                    COALESCE(SUM(p.poin_pelanggaran), 0) AS total_poin
-            FROM siswa_bermasalah sb
-            JOIN pelanggaran p ON sb.id_pelanggaran = p.id_pelanggaran
-            JOIN siswa s ON sb.id_siswa = s.id_siswa
-            GROUP BY sb.id_siswa, s.nisn, s.nama_siswa, s.kelas";
+    $query = "SELECT s.id_siswa, s.nisn, s.nama_siswa, s.kelas, s.jurusan,
+    (SELECT sb2.id_masalah 
+     FROM siswa_bermasalah sb2 
+     WHERE sb2.id_siswa = s.id_siswa 
+     ORDER BY sb2.id_masalah DESC LIMIT 1) AS id_masalah,
+    COALESCE(SUM(p.poin_pelanggaran), 0) AS total_poin
+    FROM siswa_bermasalah sb
+    JOIN pelanggaran p ON sb.id_pelanggaran = p.id_pelanggaran
+    JOIN siswa s ON sb.id_siswa = s.id_siswa
+    GROUP BY s.id_siswa, s.nisn, s.nama_siswa, s.kelas, s.jurusan";
+
     $result = mysqli_query($conn, $query);
     ?>
 
@@ -51,7 +56,7 @@
             .detail-btn {
                 display: inline-flex;
                 align-items: center;
-                background-color:rgb(226, 10, 10); 
+                background-color:rgb(40, 183, 12); 
                 color: white;
                 padding: 8px 12px;
                 border-radius: 5px;
@@ -61,7 +66,7 @@
             }
 
             .detail-btn:hover {
-                background-color:rgb(179, 0, 0); 
+                background-color:rgb(21, 179, 0); 
                 transform: scale(1.05); 
             }
 
@@ -74,7 +79,7 @@
                 transition: color 0.3s ease-in-out;
             }
             .custom-gap{
-            gap: 146px;
+            gap: 165px;
             }
 
         </style>
@@ -98,7 +103,7 @@
                 </a>
             </div>
             <div class="col-md-5">
-                <a href="add_siswa.php" class="text-decoration-none" style="display: block;">
+                <a href="add.php" class="text-decoration-none" style="display: block;">
                 <div class="card text-center">
                     <div class="card-icon mx-auto mb-2"><i class="fa-solid fa-user-plus"></i></div>
                     <div class="card-body">
@@ -119,10 +124,17 @@
                                 <h4 class="mb-0">Siswa yang melakukan pelanggaran</h4>
 
                                 <!-- Search Form -->
-                                <form class="d-flex" method="GET">
-                                    <input class="form-control me-2" type="search" name="keyword" placeholder="Cari Jurusan..." aria-label="Search" style="max-width: 250px;">
-                                    <button class="btn btn-danger" type="submit">Cari</button>
-                                </form>
+                                <select id="filterJurusan" class="form-select d-flex" style="margin:10px;width:300px;" aria-label="Default select example">
+                                    <option value="">Cari jurusan</option>
+                                    <option value="PPLG">PPLG</option>
+                                    <option value="PH">PH</option>
+                                    <option value="DKV">DKV</option>
+                                    <option value="TKRO">TKRO</option>
+                                    <option value="TBSM">TBSM</option>
+                                    <option value="AKL">AKL</option>
+                                </select>
+
+                               
                             </div>
                         </div>
 
@@ -134,6 +146,7 @@
                                     <th>NISN</th>
                                     <th>Nama Siswa</th>
                                     <th>Kelas</th>
+                                    <th>Jurusan</th>
                                     <th>Poin</th>
                                     <th>Surat Peringatan</th>
                                     <th>Aksi</th>
@@ -148,19 +161,20 @@
                                         <td>{$row['nisn']}</td>
                                         <td>{$row['nama_siswa']}</td>
                                         <td>{$row['kelas']}</td>
+                                        <td class='jurusan-cell'>{$row['jurusan']}</td>
                                         <td>{$row['total_poin']}</td>
                                         <td>
+                                        <form action='../../print_sp.php' method='GET' target='_blank'A>
                                             <select class='sp-dropdown'>
                                                 <option>Pilih SP</option>
                                                 <option value='SP1'>SP 1</option>
                                                 <option value='SP2'>SP 2</option>
                                                 <option value='SP3'>SP 3</option>
                                             </select>
-                                            <button class='sp-btn' disabled>Kirim</button>
+                                            <a href='../../print_sp.php?id_masalah=" . $row['id_masalah'] . "' target='_blank' class='btn btn-danger'>Print</a>
+
                                         </td>
                                         <td>
-                                            <button class='detail-btn'>
-                                            <a href=\"../Dashboard Siswa/dashboard.php?nisn=" .urlencode($row['nisn']) . "\" >
                                             <button class='detail-btn'><a href=\"../Dashboard Siswa/dashboard.php?nisn=" .urlencode($row['nisn']) . "\" >
                                             Detail</a></button>
                                         </td>
@@ -181,6 +195,20 @@
                     btn.disabled = this.value === 'Pilih SP';
                 });
             });
+            document.getElementById('filterJurusan').addEventListener('change', function () {
+                const selectedJurusan = this.value.toUpperCase();
+                const rows = document.querySelectorAll('table tbody tr');
+
+                rows.forEach(row => {
+                    const jurusanText = row.querySelector('.jurusan-cell')?.textContent.toUpperCase() || "";
+                    if (!selectedJurusan || jurusanText.includes(selectedJurusan)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
+
         </script>
     </body>
     </html>

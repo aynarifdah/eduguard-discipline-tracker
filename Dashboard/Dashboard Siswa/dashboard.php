@@ -84,21 +84,19 @@ if ($totalPoin >= 10 && $totalPoin < 30) {
         <div>
     <h3 style="color: white;">Biodata <span style="color:rgb(207, 207, 207); font-size:15px;">siswa</span></h3>
 
-    <div style="display: flex; gap: 20px; align-items: stretch;">
+    <div class="mb-4" style="display: flex; gap: 20px; align-items: stretch;">
 
         <!-- Card pertama (kotak biasa) -->
         <div class="card custom-gap" style="width: 20rem;">
         
         <?php
-            // Ambil isi foto dari database
-            $fotoBlob = $dataSiswa['foto'];
-
-            // Ubah ke format base64
-            $fotoBase64 = base64_encode($fotoBlob);
-            $src = 'data:image/jpeg;base64,' . $fotoBase64;
+            $fotoFile = $dataSiswa['foto'];
+            $src = '../img/foto_siswa/' . $fotoFile;
+            
         ?>
-        <img src="<?php echo $src; ?>" alt="Foto Siswa" width="83%" style="padding:40px; padding-bottom:0; display: block; margin: 0 auto;">
-            <div class="card-body">
+      <img src="../img/foto_siswa/<?php echo $dataSiswa['foto']; ?>" alt="Foto Siswa" width="83%" style="padding:40px; padding-bottom:0; display: block; margin: 0 auto;">
+
+        <div class="card-body">
                 <p class="card-text" style="text-align: center; font-weight: bold;"><?php echo htmlspecialchars($dataSiswa['nama_siswa']); ?></p>
                 <hr>
                 <p class="card-text" style="text-align: center; font-size:14px; color:grey;"><?php echo htmlspecialchars($dataSiswa['nisn']); ?></p>
@@ -107,7 +105,7 @@ if ($totalPoin >= 10 && $totalPoin < 30) {
         </div>
 
         <!-- Card kedua (persegi panjang ke kanan) -->
-        <div class="card" style="width: 50rem; display: flex; padding: 20px;">
+        <div class="card" style="width: 60rem; display: flex; padding: 20px;">
             <p style="margin-bottom: 20px;">Profile</p>
             <div >
              <div style="display: flex; flex-direction: column; gap: 8px; font-family: Arial; font-size: 14px;">
@@ -139,7 +137,50 @@ if ($totalPoin >= 10 && $totalPoin < 30) {
             </div>
         </div>
     </div>
+    
 </div>
+<!-- Riwayat Pelanggaran -->
+        <div class="card">
+            <div class="card-body">
+                <h5>Riwayat Pelanggaran Terbaru</h5>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Pelanggaran</th>
+                            <th>Poin</th>
+                            <th>keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $queryRiwayat = "SELECT p.jenis_pelanggaran, p.poin_pelanggaran, sb.tgl_pelanggaran, sb.keterangan
+                        FROM siswa_bermasalah sb
+                        JOIN pelanggaran p ON sb.id_pelanggaran = p.id_pelanggaran
+                        WHERE sb.id_siswa = '" . mysqli_real_escape_string($conn, $id_siswa) . "'
+                        ORDER BY sb.tgl_pelanggaran DESC";
+       
+                        $resultRiwayat = mysqli_query($conn, $queryRiwayat);
+                        $no = 1;
+
+                        if (mysqli_num_rows($resultRiwayat) > 0) {
+                            while ($row = mysqli_fetch_assoc($resultRiwayat)) {
+                                echo "<tr>";
+                                echo "<td>" . $no++ . "</td>";
+                                echo "<td>" . htmlspecialchars($row['tgl_pelanggaran']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['jenis_pelanggaran']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['poin_pelanggaran']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['keterangan'] ?? "Tidak ada keterangan") . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='4' class='text-center'>Belum ada pelanggaran</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
 
     </main>
 
