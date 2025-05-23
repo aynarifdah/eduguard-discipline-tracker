@@ -6,26 +6,30 @@
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #b71c32 60%, #f8f9fa 40%);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
 
-        .container {
-            text-align: center;
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+            width: 100%;
         }
 
         h2 {
-            color: #333;
-            margin-bottom: 30px;
+            color: white;
+            margin-bottom: 50px;
+            font-size: 24px;
         }
 
         .card-container {
-            padding-top: 20px;
             display: flex;
             justify-content: center;
             gap: 40px;
@@ -67,11 +71,30 @@
         form {
             margin: 0;
         }
+
+        .btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            background-color: #b71c32;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #8a1728;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Pilih Metode Penambahan Data Siswa</h2><br>
+    <div class="main">
+        <h2>Pilih Metode Penambahan Data Siswa</h2>
         <div class="card-container">
             <a href="add_siswa.php" class="card">
                 <h1>➕</h1>
@@ -86,7 +109,7 @@
                 <input type="hidden" name="upload" value="true">
             </form>
         </div>
-        <a href="sidebar.php" class="btn btn-td ">Kembali</a>
+        <a href="sidebar.php" class="btn">Kembali</a>
     </div>
 </body>
 </html>
