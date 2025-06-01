@@ -21,8 +21,8 @@ if ($id_siswa > 0) {
         $data[] = [
             'tanggal' => $row['tgl_pelanggaran'],
             'kategori' => $row['nama_kategori'],
-            'pasal' => '-', // Jika ada pasal bisa diambil dari tabel lain
-            'ayat' => '-', // Jika ada ayat bisa diambil dari tabel lain
+            'pasal' => '-', 
+            'ayat' => '-', 
             'keterangan' => $row['jenis_pelanggaran'],
             'poin' => $row['poin_pelanggaran']
         ];

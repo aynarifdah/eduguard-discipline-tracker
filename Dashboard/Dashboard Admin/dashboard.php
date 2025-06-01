@@ -164,20 +164,19 @@
                                         <td class='jurusan-cell'>{$row['jurusan']}</td>
                                         <td>{$row['total_poin']}</td>
                                         <td>
-                                        <form action='../../print_sp.php' method='GET' target='_blank'A>
-                                            <select class='sp-dropdown'>
-                                                <option>Pilih SP</option>
-                                                <option value='SP1'>SP 1</option>
-                                                <option value='SP2'>SP 2</option>
-                                                <option value='SP3'>SP 3</option>
+                                        <form action='../../generated_sp.php' method='GET' target='_blank'>
+                                            <select name='sp' class='sp-dropdown' required>
+                                                <option value=''>Pilih SP</option>
+                                                <option value='1'>SP 1</option>
+                                                <option value='2'>SP 2</option>
+                                                <option value='3'>SP 3</option>
                                             </select>
-                                            <a href='../../print_sp.php?id_masalah=" . $row['id_masalah'] . "' target='_blank' class='btn btn-danger'>Print</a>
+                                            <input type='hidden' name='id_masalah' value='" . $row["id_masalah"] . "'>
 
-                                        </td>
-                                        <td>
-                                            <button class='detail-btn'><a href=\"../Dashboard Siswa/dashboard.php?nisn=" .urlencode($row['nisn']) . "\" >
-                                            Detail</a></button>
-                                        </td>
+                                            <!-- Tombol submit -->
+                                            <button type='submit' class='btn btn-danger'>Print</button>
+                                        </form>
+                                    </td>
                                     </tr>";
                                     $no++;
                                 }

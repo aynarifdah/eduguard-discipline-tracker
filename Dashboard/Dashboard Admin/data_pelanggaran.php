@@ -145,7 +145,7 @@ $result = mysqli_query($conn, $query);
                                             <option value='SP2'>SP 2</option>
                                             <option value='SP3'>SP 3</option>
                                         </select>
-                                        <a href='../../print_sp.php?id_masalah=" . $row['id_masalah'] . "' target='_blank' class='btn btn-danger'>Print</a>
+                                        <a href='../../generated_sp.php?id_masalah=" . $row['id_masalah'] . "' target='_blank' class='btn btn-danger'>Print</a>
                                     </td>
                                     <td>
                                         <button class='detail-btn'><a href=\"../Dashboard Siswa/dashboard.php?nisn=" .urlencode($row['nisn']) . "\" >Detail</a></button>

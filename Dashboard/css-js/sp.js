@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const siswaList = document.getElementById("siswa-list");
         if (!siswaList) {
-            setTimeout(loadData, 500); // Coba lagi setelah 500ms
+            setTimeout(loadData, 500); 
             return;
         }
-        siswaList.innerHTML = ""; // Kosongkan dulu sebelum menambahkan data
+        siswaList.innerHTML = ""; 
 
         const siswaData = [
             { id: 1, nisn: "0123456",  nama: "Vahira Nurfitria", kelas: "11 PPLG 2", poin: 45, spDiberikan: "" },

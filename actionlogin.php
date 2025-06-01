@@ -34,7 +34,7 @@ if (strpos($username, 'admin_') === 0) {
           </script>";;
     }
 } else if (strpos($username, 'guru_') === 0) {
-    // Login untuk petugas (username diawali dengan "petugas_")
+    // Login untuk petugas (username diawali dengan "guru_")
     $query = "SELECT id_admin, username, role, nama FROM user WHERE username = '$username' AND password = '$password' AND role = 'guru'";
     $result = mysqli_query($conn, $query);
 
@@ -47,7 +47,7 @@ if (strpos($username, 'admin_') === 0) {
         $_SESSION['role'] = $user['role'];
         $_SESSION['nama'] = $user['nama']; 
 
-        // Arahkan ke dashboard petugas
+        // Arahkan ke dashboard guru
         header("Location: Dashboard/Dashboard Guru/sidebarguru.php"); 
         exit;
     } else {
@@ -57,7 +57,7 @@ if (strpos($username, 'admin_') === 0) {
           </script>";;
     }
 } else {
-    // Login untuk masyarakat (username tanpa kode unik, hanya nama biasa)
+    // Login untuk siswa (username tanpa kode unik, hanya nisn)
     $query = "SELECT nisn, password, nama_siswa FROM siswa WHERE nisn = ?";
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, "s", $username);
@@ -81,7 +81,13 @@ if (mysqli_num_rows($result) > 0) {
             window.location.href='login.php';
           </script>";
     }
-} 
+    
+} else {
+        echo "<script>
+            alert('Data tidak ditemukan! Pastikan NISN Anda benar.');
+            window.location.href='login.php';
+        </script>";
+    }
 
 }
 

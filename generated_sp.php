@@ -1,17 +1,19 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
-require_once 'connection.php';
+require_once 'connection.php'; 
 
 use setasign\Fpdi\Fpdi;
 
+// Ambil data dari parameter GET
 $id_masalah = isset($_GET['id_masalah']) ? intval($_GET['id_masalah']) : 0;
+$sp = isset($_GET['sp']) ? intval($_GET['sp']) : 1; 
 
-if ($id_masalah <= 0) {
-    die("ID masalah tidak valid");
+
+if ($id_masalah <= 0 || !in_array($sp, [1, 2, 3])) {
+    die("ID masalah atau nomor SP tidak valid");
 }
 
-// Ambil data dari database
-$stmt = $pdo->prepare("
+$sql = "
     SELECT 
         s.nama_siswa,
         s.nisn,
@@ -28,54 +30,71 @@ $stmt = $pdo->prepare("
     JOIN siswa s ON sb.id_siswa = s.id_siswa
     JOIN pelanggaran p ON sb.id_pelanggaran = p.id_pelanggaran
     JOIN user u ON sb.id_admin = u.id_admin
-    WHERE sb.id_masalah = ?
-");
-$stmt->execute([$id_masalah]);
-$data = $stmt->fetch(PDO::FETCH_ASSOC);
+    WHERE sb.id_masalah = $id_masalah
+";
+
+$result = mysqli_query($conn, $sql);
+$data = mysqli_fetch_assoc($result);
 
 if (!$data) {
     die("Data tidak ditemukan");
 }
 
-// Generate PDF dengan FPDI
-$pdf = new Fpdi('P', 'mm', 'A4');
+$pdf = new FPDI();
 $pdf->AddPage();
 
-// Template SP kamu (ganti nanti)
-// $templatePath = 'template/??';------
-$pdf->Image($templatePath, 0, 0, 210); // full page background
+switch ($sp) {
+    case 1:
+        $templateFile = 'template/SURAT PERINGATAN 1.pdf';
+        break;
+    case 2:
+        $templateFile = 'template/SURAT PERINGATAN 2.pdf';
+        break;
+    case 3:
+        $templateFile = 'template/SURAT PERINGATAN 3.pdf';
+        break;
+    default:
+        die("Nomor SP tidak valid");
+}
 
-$pdf->SetFont('Arial', '', 12);
-$pdf->SetTextColor(0, 0, 0);
+// Cek apakah file template ada
+if (!file_exists($templateFile)) {
+    die("Template tidak ditemukan: $templateFile");
+}
 
-// Atur posisi dan isi data siswa
-$pdf->SetXY(30, 60);
-$pdf->Cell(0, 10, "Nama Siswa: " . $data['nama_siswa'], 0, 1);
+// Load template
+$pdf->setSourceFile($templateFile);
+$template = $pdf->importPage(1);
+$pdf->useTemplate($template);
+// Set font
 
-$pdf->SetX(30);
-$pdf->Cell(0, 10, "NISN: " . $data['nisn'], 0, 1);
+// NAMA di bagian "Yth"
+$pdf->SetFont('Times', 'B', 12);
+$pdf->SetXY(33, 83); 
+$pdf->Write(6, $data['nama_siswa']);
 
-$pdf->SetX(30);
-$pdf->Cell(0, 10, "Kelas: " . $data['kelas'] . " - " . $data['jurusan'], 0, 1);
+$pdf->SetFont('Times', '', 12);
 
-$pdf->SetX(30);
-$pdf->Cell(0, 10, "Nama Orang Tua: " . $data['nama_ortu'], 0, 1);
+$startY = 115;
+$offset = 8.5;
 
-$pdf->SetX(30);
-$pdf->Cell(0, 10, "No. HP Ortu: " . $data['no_ortu'], 0, 1);
+// Nama
+$pdf->SetXY(70, $startY);
+$pdf->Write(6, $data['nama_siswa']);
 
-$pdf->Ln(10);
-$pdf->SetX(30);
-$pdf->MultiCell(150, 8, "Pelanggaran: " . $data['jenis_pelanggaran'] . "\nPoin: " . $data['poin_pelanggaran'], 0);
+// NISN
+$pdf->SetXY(70, $startY + $offset);
+$pdf->Write(6, $data['nisn']);
 
-$pdf->Ln(5);
-$pdf->SetX(30);
-$pdf->Cell(0, 10, "Tanggal Pelanggaran: " . date("d M Y", strtotime($data['tgl_pelanggaran'])), 0, 1);
+// Kelas
+$pdf->SetXY(70, $startY + 2 * $offset);
+$pdf->Write(6, $data['kelas']);
 
-$pdf->Ln(10);
-$pdf->SetX(120);
-$pdf->Cell(0, 10, "Admin: " . $data['nama_admin'], 0, 1, 'R');
+// Jurusan
+$pdf->SetXY(70, $startY + 3 * $offset);
+$pdf->Write(6, $data['jurusan']);
+
 
 // Output PDF
-$filename = 'SP_' . preg_replace('/[^a-zA-Z0-9]/', '_', $data['nama_siswa']) . '.pdf';
-$pdf->Output('I', $filename);
+$pdf->Output("I", "SP_{$data['nama_siswa']}.pdf");
+?>
