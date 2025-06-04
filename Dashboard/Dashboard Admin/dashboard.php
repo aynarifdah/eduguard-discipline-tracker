@@ -63,6 +63,7 @@
                 text-decoration: none;
                 font-size: 14px;
                 font-weight: bold;
+                border: none;
             }
 
             .detail-btn:hover {
@@ -176,7 +177,10 @@
                                             <!-- Tombol submit -->
                                             <button type='submit' class='btn btn-danger'>Print</button>
                                         </form>
-                                    </td>
+                                        </td>
+                                        <td>
+                                            <button class='detail-btn'><a href=\"../Dashboard Siswa/dashboard.php?nisn=" .urlencode($row['nisn']) . "\" >Detail</a></button>
+                                        </td>
                                     </tr>";
                                     $no++;
                                 }

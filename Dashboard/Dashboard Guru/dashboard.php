@@ -49,6 +49,7 @@ $result = mysqli_query($conn, $query);
             text-decoration: none;
             font-size: 14px;
             font-weight: bold;
+            border: none;
         }
 
         .detail-btn:hover {

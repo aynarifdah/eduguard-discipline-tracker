@@ -19,7 +19,7 @@ if (isset($_POST['ubah_password'])) {
         $update = mysqli_query($conn, "UPDATE siswa SET password = '$password_baru' WHERE nisn = '$nisn'");
 
         if ($update) {
-            echo "<script>alert('Password berhasil diubah!'); window.location.href='acc.php';</script>";
+            echo "<script>alert('Password berhasil diubah!'); window.location.href='sidebarsiswa.php';</script>";
             exit;
         } else {
             echo "<script>alert('Gagal mengubah password');</script>";
@@ -92,7 +92,6 @@ if (isset($_POST['ubah_password'])) {
 </head>
 <body>
 
-    <td><a href="sidebarsiswa.php" class="btn btn-td">Kembali</a></td>
 
     <div class="header">
         <h2>Edit Akun - <?= htmlspecialchars($siswa['nama_siswa']); ?></h2>

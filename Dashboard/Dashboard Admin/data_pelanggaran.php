@@ -29,56 +29,7 @@ $result = mysqli_query($conn, $query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css-js/dashboard.css">
-    <style>
-        .sp-dropdown {
-            padding: 5px;
-            font-size: 14px;
-            border-radius: 5px;
-        }
-        .sp-btn {
-            background: rgb(226, 10, 10);
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .sp-btn:disabled {
-            background: gray;
-            cursor: not-allowed;
-        }
-        .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-       
-        .detail-btn {
-            display: inline-flex;
-            align-items: center;
-            background-color:rgb(226, 10, 10); 
-            color: white;
-            padding: 8px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .detail-btn:hover {
-            background-color:rgb(179, 0, 0); 
-            transform: scale(1.05); 
-        }
-
-        .detail-btn i {
-            margin-right: 5px;
-        }
-        a {
-            text-decoration: none; 
-            color:rgb(255, 255, 255); 
-            transition: color 0.3s ease-in-out;
-        }
-
-    </style>
+   
 </head>
 <body>
     <main class="main-content">
@@ -139,14 +90,19 @@ $result = mysqli_query($conn, $query);
                                     <td>{$row['jurusan']}</td>
                                     <td>{$row['total_poin']}</td>
                                     <td>
-                                        <select class='sp-dropdown'>
-                                            <option>Pilih SP</option>
-                                            <option value='SP1'>SP 1</option>
-                                            <option value='SP2'>SP 2</option>
-                                            <option value='SP3'>SP 3</option>
-                                        </select>
-                                        <a href='../../generated_sp.php?id_masalah=" . $row['id_masalah'] . "' target='_blank' class='btn btn-danger'>Print</a>
-                                    </td>
+                                        <form action='../../generated_sp.php' method='GET' target='_blank'>
+                                            <select name='sp' class='sp-dropdown' required>
+                                                <option value=''>Pilih SP</option>
+                                                <option value='1'>SP 1</option>
+                                                <option value='2'>SP 2</option>
+                                                <option value='3'>SP 3</option>
+                                            </select>
+                                            <input type='hidden' name='id_masalah' value='" . $row["id_masalah"] . "'>
+
+                                            <!-- Tombol submit -->
+                                            <button type='submit' class='btn btn-danger'>Print</button>
+                                        </form>
+                                        </td>
                                     <td>
                                         <button class='detail-btn'><a href=\"../Dashboard Siswa/dashboard.php?nisn=" .urlencode($row['nisn']) . "\" >Detail</a></button>
                                     </td>

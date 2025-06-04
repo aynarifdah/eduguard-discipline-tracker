@@ -1,5 +1,4 @@
 <?php
-// Koneksi ke database
 require_once 'connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,21 +15,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Validasi level
+    // Validasi role
     $allowed_roles = ['admin', 'guru'];
     if (!in_array($role, $allowed_roles)) {
         echo "Role tidak valid.";
         exit;
     }
 
-    // Validasi nomor telepon (hanya angka, minimal 10 digit)
+    // Validasi nomor NIP
     if (!preg_match('/^[0-9]{10,}$/', $nip)) {
         echo "NIP tidak valid. Harus terdiri dari minimal 10 angka.";
         exit;
     }
 
-    // Enkripsi password sebelum menyimpan
-    // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     try {
         // Query untuk memasukkan data ke tabel

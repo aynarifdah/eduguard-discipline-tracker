@@ -1,6 +1,6 @@
 <?php
 
-include '../../connection.php'; // Pastikan file koneksi sesuai dengan struktur folder
+include '../../connection.php';
 
 // Ambil data dari tabel verifikasi
 $query = "SELECT v.id_catatan, s.nisn, s.nama_siswa, s.kelas, v.tgl_pelanggaran, k.nama_kategori, p.poin_pelanggaran

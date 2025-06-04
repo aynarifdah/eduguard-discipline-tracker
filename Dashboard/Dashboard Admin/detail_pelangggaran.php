@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../../connection.php'; // Pastikan koneksi ke database
+include __DIR__ . '/../../connection.php'; 
 
 // Ambil ID siswa dari parameter
 $id_siswa = isset($_GET['id']) ? intval($_GET['id']) : 0;
