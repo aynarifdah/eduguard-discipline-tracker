@@ -191,6 +191,21 @@
                 </div>
             </div>
         </main>
+        <script>
+            document.getElementById('filterJurusan').addEventListener('change', function () {
+                const selectedJurusan = this.value.toUpperCase();
+                const rows = document.querySelectorAll('table tbody tr');
+
+                rows.forEach(row => {
+                    const jurusanText = row.querySelector('.jurusan-cell')?.textContent.toUpperCase() || "";
+                    if (!selectedJurusan || jurusanText.includes(selectedJurusan)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
+        </script>
       
     </body>
     </html>

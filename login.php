@@ -86,6 +86,7 @@
             font-size: 16px;
             font-weight: bold;
             display: block;
+            border: none;
             margin-top: 10px;
             transition: 0.3s;
         }
