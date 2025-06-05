@@ -14,7 +14,6 @@ $(document).ready(function () {
                     
                     if (page.includes("dashboard.php")) {
                         console.log("🔄 Memuat ulang event listener SP...");
-                        $.getScript("../css-js/sp.js"); // Load ulang script
                     }
                 }
                 $(this).fadeIn(200);

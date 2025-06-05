@@ -102,29 +102,8 @@ $resultSiswa = mysqli_query($conn, $querySiswa);
                 <button type="submit" class="btn btn-laporan">Kirim</button>
             </form>
 
-            <script>
-                document.getElementById("nama_siswa").addEventListener("input", function () {
-                let input = this.value;
-                let list = document.getElementById("list_siswa").options;
+                       <script>
                 
-                for (let i = 0; i < list.length; i++) {
-                    if (list[i].value === input) {
-                        let nisn = list[i].getAttribute("data-nisn");
-                        let kelas = list[i].getAttribute("data-kelas");
-                        let jurusan = list[i].getAttribute("data-jurusan");
-
-                        document.getElementById("nisn").value = nisn;
-                        document.getElementById("kelas").value = kelas;
-                        document.getElementById("jurusan").value = jurusan;
-                        break;
-                    } else {
-                        document.getElementById("nisn").value = "";
-                        document.getElementById("kelas").value = "";
-                        document.getElementById("jurusan").value = "";
-                    }
-                }
-            });
-
                 document.getElementById('kategori').addEventListener('change', function () {
                 let kategoriID = this.value;
                 let pasalSelect = document.getElementById('pasal');
@@ -177,8 +156,8 @@ $resultSiswa = mysqli_query($conn, $querySiswa);
                     poinElement.innerText = '-';
                 }
             });
-              //untuk ubah warna button di readonly
-              document.getElementById("nama_siswa").addEventListener("input", function () {
+            
+            document.getElementById("nama_siswa").addEventListener("input", function () {
             let input = this.value;
             let list = document.getElementById("list_siswa").options;
             let nisn = document.getElementById("nisn");

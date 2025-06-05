@@ -7,12 +7,12 @@
     exit();
 }
 
-$query = "SELECT v.id_catatan, s.nama_siswa, p.jenis_pelanggaran, v.tgl_pelanggaran, v.status_verifikasi
-          FROM verifikasi v
-          JOIN siswa s ON v.id_siswa = s.id_siswa
-          JOIN pelanggaran p ON v.id_pelanggaran = p.id_pelanggaran
-          WHERE v.status_verifikasi = 'belum diverifikasi'";
-$result = mysqli_query($conn, $query);
+// $query = "SELECT v.id_catatan, s.nama_siswa, p.jenis_pelanggaran, v.tgl_pelanggaran, v.status_verifikasi
+//           FROM verifikasi v
+//           JOIN siswa s ON v.id_siswa = s.id_siswa
+//           JOIN pelanggaran p ON v.id_pelanggaran = p.id_pelanggaran
+//           WHERE v.status_verifikasi = 'belum diverifikasi'";
+// $result = mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>

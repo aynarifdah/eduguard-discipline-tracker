@@ -33,32 +33,3 @@ if ($id_siswa > 0) {
     echo json_encode([]);
 }
 ?>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const id = getQueryParam("id");
-        const detailContent = document.getElementById("detail-content");
-        let no = 1;
-
-        fetch(`dashboard.php?id=${id}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    detailContent.innerHTML = data.map(isi => `
-                        <tr>
-                            <td>${no++}</td> 
-                            <td>${isi.tanggal}</td> 
-                            <td>${isi.kategori}</td>
-                            <td>${isi.pasal}</td>
-                            <td>${isi.ayat}</td>
-                            <td>${isi.keterangan}</td>
-                            <td>${isi.poin}</td>
-                        </tr>
-                    `).join('');
-                } else {
-                    detailContent.innerHTML = '<tr><td colspan="7">Data tidak ditemukan</td></tr>';
-                }
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    });
-</script>

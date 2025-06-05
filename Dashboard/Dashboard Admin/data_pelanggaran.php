@@ -116,13 +116,6 @@ $result = mysqli_query($conn, $query);
             </div>
         </div>
     </main>
-    <script>
-        document.querySelectorAll('.sp-dropdown').forEach(dropdown => {
-            dropdown.addEventListener('change', function() {
-                let btn = this.nextElementSibling;
-                btn.disabled = this.value === 'Pilih SP';
-            });
-        });
-    </script>
+  
 </body>
 </html>
